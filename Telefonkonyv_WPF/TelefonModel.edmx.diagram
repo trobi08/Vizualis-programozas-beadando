@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="c1373f94666a49a4a9702f702a3df06b" Name="Diagram1">
+        <EntityTypeShape EntityType="TelefonkonyvModel.Kontaktok" Width="1.5" PointX="5.875" PointY="2" IsExpanded="true" />
+        <EntityTypeShape EntityType="TelefonkonyvModel.Telefonszamok" Width="1.5" PointX="9.75" PointY="1" IsExpanded="true" />
+        <AssociationConnector Association="TelefonkonyvModel.FK__Telefonsz__Konta__5EBF139D" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="TelefonkonyvModel.CimSet" Width="1.5" PointX="3" PointY="1" />
+        <EntityTypeShape EntityType="TelefonkonyvModel.SzemelySet" Width="1.5" PointX="0.75" PointY="0.875" />
+        <AssociationConnector Association="TelefonkonyvModel.FK_SzemelyCim" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

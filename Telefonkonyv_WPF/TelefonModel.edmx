@@ -1,0 +1,225 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="TelefonkonyvModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="CimSet">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SzemelyId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Kontaktok">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nev" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SzemelySet">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nev" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Telefon" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Telefonszamok">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Telefonszam" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Tipus" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="KontaktID" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__Telefonsz__Konta__5EBF139D">
+          <End Role="Kontaktok" Type="Self.Kontaktok" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Telefonszamok" Type="Self.Telefonszamok" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kontaktok">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Telefonszamok">
+              <PropertyRef Name="KontaktID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SzemelyCim">
+          <End Role="SzemelySet" Type="Self.SzemelySet" Multiplicity="1" />
+          <End Role="CimSet" Type="Self.CimSet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SzemelySet">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CimSet">
+              <PropertyRef Name="SzemelyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="TelefonkonyvModelStoreContainer">
+          <EntitySet Name="CimSet" EntityType="Self.CimSet" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Kontaktok" EntityType="Self.Kontaktok" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SzemelySet" EntityType="Self.SzemelySet" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Telefonszamok" EntityType="Self.Telefonszamok" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Telefonsz__Konta__5EBF139D" Association="Self.FK__Telefonsz__Konta__5EBF139D">
+            <End Role="Kontaktok" EntitySet="Kontaktok" />
+            <End Role="Telefonszamok" EntitySet="Telefonszamok" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SzemelyCim" Association="Self.FK_SzemelyCim">
+            <End Role="SzemelySet" EntitySet="SzemelySet" />
+            <End Role="CimSet" EntitySet="CimSet" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="TelefonkonyvModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Kontaktok">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nev" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Telefonszamoks" Relationship="Self.FK__Telefonsz__Konta__5EBF139D" FromRole="Kontaktok" ToRole="Telefonszamok" />
+        </EntityType>
+        <EntityType Name="Telefonszamok">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Telefonszam" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Tipus" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="KontaktID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Kontaktok" Relationship="Self.FK__Telefonsz__Konta__5EBF139D" FromRole="Telefonszamok" ToRole="Kontaktok" />
+        </EntityType>
+        <Association Name="FK__Telefonsz__Konta__5EBF139D">
+          <End Role="Kontaktok" Type="Self.Kontaktok" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Telefonszamok" Type="Self.Telefonszamok" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kontaktok">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Telefonszamok">
+              <PropertyRef Name="KontaktID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="TelefonkonyvEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Kontaktoks" EntityType="Self.Kontaktok" />
+          <EntitySet Name="Telefonszamoks" EntityType="Self.Telefonszamok" />
+          <AssociationSet Name="FK__Telefonsz__Konta__5EBF139D" Association="Self.FK__Telefonsz__Konta__5EBF139D">
+            <End Role="Kontaktok" EntitySet="Kontaktoks" />
+            <End Role="Telefonszamok" EntitySet="Telefonszamoks" />
+          </AssociationSet>
+          <EntitySet Name="CimSets" EntityType="TelefonkonyvModel.CimSet" />
+          <EntitySet Name="SzemelySets" EntityType="TelefonkonyvModel.SzemelySet" />
+          <AssociationSet Name="FK_SzemelyCim" Association="TelefonkonyvModel.FK_SzemelyCim">
+            <End Role="SzemelySet" EntitySet="SzemelySets" />
+            <End Role="CimSet" EntitySet="CimSets" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="CimSet">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SzemelyId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="SzemelySet" Relationship="TelefonkonyvModel.FK_SzemelyCim" FromRole="CimSet" ToRole="SzemelySet" />
+        </EntityType>
+        <EntityType Name="SzemelySet">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nev" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Telefon" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="CimSets" Relationship="TelefonkonyvModel.FK_SzemelyCim" FromRole="SzemelySet" ToRole="CimSet" />
+        </EntityType>
+        <Association Name="FK_SzemelyCim">
+          <End Type="TelefonkonyvModel.SzemelySet" Role="SzemelySet" Multiplicity="1" />
+          <End Type="TelefonkonyvModel.CimSet" Role="CimSet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SzemelySet">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CimSet">
+              <PropertyRef Name="SzemelyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="TelefonkonyvModelStoreContainer" CdmEntityContainer="TelefonkonyvEntities">
+          <EntitySetMapping Name="Kontaktoks">
+            <EntityTypeMapping TypeName="TelefonkonyvModel.Kontaktok">
+              <MappingFragment StoreEntitySet="Kontaktok">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Nev" ColumnName="Nev" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Telefonszamoks">
+            <EntityTypeMapping TypeName="TelefonkonyvModel.Telefonszamok">
+              <MappingFragment StoreEntitySet="Telefonszamok">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Telefonszam" ColumnName="Telefonszam" />
+                <ScalarProperty Name="Tipus" ColumnName="Tipus" />
+                <ScalarProperty Name="KontaktID" ColumnName="KontaktID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CimSets">
+            <EntityTypeMapping TypeName="TelefonkonyvModel.CimSet">
+              <MappingFragment StoreEntitySet="CimSet">
+                <ScalarProperty Name="SzemelyId" ColumnName="SzemelyId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SzemelySets">
+            <EntityTypeMapping TypeName="TelefonkonyvModel.SzemelySet">
+              <MappingFragment StoreEntitySet="SzemelySet">
+                <ScalarProperty Name="Telefon" ColumnName="Telefon" />
+                <ScalarProperty Name="Nev" ColumnName="Nev" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
